@@ -1,4 +1,12 @@
-New Day
-After All
-New Day Again
-Finally
+data:
+    data folder, should contain:
+    - Partition6467LinkData.csv
+    - Partition6467ProbePoints.csv
+    - PUT DATA FILES IN THIS FOLDER
+    - readme - mapmatching.txt
+
+helper:
+    helper funcitons, to load data and do pre-processing
+
+core:
+    core funcitons, algorithms, main workflow, what so ever

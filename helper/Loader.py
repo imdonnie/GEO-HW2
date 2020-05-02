@@ -19,11 +19,12 @@ def checkDataFolder():
 def loadLinkData():
     link_data_path = os.path.join(data_path, 'Partition6467LinkData.csv')
     print(INFO, 'Load link data from: {0}'.format(link_data_path))
-    with open(link_data_path) as link_data:
-        link_data_lines = link_data.readlines()
-        print(len(link_data_lines))
-    # link_data = np.genfromtxt(link_data_path, delimiter=',')
-    # print(INFO, 'Link data shape:{0}'.format(link_data.shape))
+    # with open(link_data_path) as link_data:
+    #     link_data_lines = link_data.readlines()
+    #     print(len(link_data_lines))
+    link_data = np.genfromtxt(link_data_path, delimiter=',')
+    print(INFO, 'Link data shape:{0}'.format(link_data.shape))
+    return link_data
 
 def loadProbePoints():
     probe_points_path = os.path.join(data_path, 'Partition6467ProbePoints.csv')

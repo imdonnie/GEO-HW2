@@ -13,7 +13,6 @@ class GeoPoint():
         self.lon = float(att[0])
         self.lat = float(att[1])
 
-
 class Link():
     ref = None
     non = None
@@ -64,7 +63,7 @@ for line in lines:
     # shape info
     nodes = attr[14].split("|")
     links[attr[0]] = []
-    for i in xrange(0,len(nodes)-1):
+    for i in range(0,len(nodes)-1):
         temp = Link(attr[0],nodes[i],nodes[i+1])
         links[attr[0]].append(temp)
         if points.has_key(nodes[i]):
@@ -81,7 +80,7 @@ print("Link loaded")
 target = open("part_of_matched_points.txt","w")
 recent = None
 cand = []
-probes = open("Partition6467ProbePoints.csv").readlines()
+probes = open("..\\data\\Partition6467ProbePoints.csv").readlines()
 cnt = 0;
 for probe in probes:
     cnt+=1

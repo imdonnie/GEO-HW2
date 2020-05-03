@@ -80,7 +80,7 @@ target = open("part_of_matched_points.txt","w")
 recent = None
 cand = []
 probes = open("..\\data\\Partition6467ProbePoints.csv").readlines()
-cnt = 0;
+cnt = 0
 for probe in probes:
     cnt+=1
     #All attributes are stored in attr which is an array

@@ -5,6 +5,6 @@ import cv2
 
 if __name__ == "__main__":
     # print(checkDataFolder())
-    load('link data')
-    # probe_points = load('probe points')
+    # load('link data')
+    probe_points = load('probe points')
     # print(probe_points.shape)

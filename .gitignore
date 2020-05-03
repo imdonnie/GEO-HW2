@@ -4,4 +4,4 @@
 *.history
 **/*.csv
 **/*.txt
-
+**/__pycache__

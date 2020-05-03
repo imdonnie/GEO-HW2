@@ -61,6 +61,7 @@ class Link():
 lines = open("..\\data\\Partition6467LinkData.csv").readlines()
 for line in lines:
     attr = line.split(",")
+    # shape info
     nodes = attr[14].split("|")
     links[attr[0]] = []
     for i in xrange(0,len(nodes)-1):
@@ -128,4 +129,3 @@ for probe in probes:
                     else:
                         direct = "T"
     target.write("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s ,%s, %s\n" % (attr[0], attr[1],attr[2],attr[3],attr[4],attr[5],attr[6],attr[7][:-1],linkid,direct,small**0.5*math.pi/180*6371000,distoref*math.pi/180*6371000))
-    #print( "%s, %s, %s, %s, %s, %s, %s, %s, %s, %s ,%s, %s\n" % (attr[0], attr[1],attr[2],attr[3],attr[4],attr[5],attr[6],attr[7][:-1],linkid,direct,small**0.5*math.pi/180*6371000,distoref*math.pi/180*6371000)

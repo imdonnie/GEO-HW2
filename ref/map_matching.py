@@ -58,7 +58,7 @@ class Link():
         return distoref**0.5
 
 #To load the link node
-lines = open("Partition6467LinkData.csv").readlines()
+lines = open("..\\data\\Partition6467LinkData.csv").readlines()
 for line in lines:
     attr = line.split(",")
     nodes = attr[14].split("|")

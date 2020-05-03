@@ -76,7 +76,7 @@ for line in lines:
         else:
             points[nodes[i+1]] = [temp]
 
-print "Link loaded"
+print("Link loaded")
 
 target = open("part_of_matched_points.txt","w")
 recent = None
@@ -113,7 +113,7 @@ for probe in probes:
                     else:
                         direct = "T"
                     cand = [link.ref,link.non]
-        print "%s\r" % (float(cnt)/3375745),
+        print("%s\r" % (float(cnt)/3375745))
     else:
         for candpoint in cand:
             for link in points[candpoint.ID]:
@@ -129,4 +129,3 @@ for probe in probes:
                     else:
                         direct = "T"
     target.write("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s ,%s, %s\n" % (attr[0], attr[1],attr[2],attr[3],attr[4],attr[5],attr[6],attr[7][:-1],linkid,direct,small**0.5*math.pi/180*6371000,distoref*math.pi/180*6371000))
-    #print "%s, %s, %s, %s, %s, %s, %s, %s, %s, %s ,%s, %s\n" % (attr[0], attr[1],attr[2],attr[3],attr[4],attr[5],attr[6],attr[7][:-1],linkid,direct,small**0.5*math.pi/180*6371000,distoref*math.pi/180*6371000)

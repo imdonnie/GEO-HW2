@@ -12,6 +12,8 @@ INFO = '\033[1;32m[INFO]\033[0m'
 ERROR = '\033[1;31m[ERROR]\033[0m'
 WARNING = '\033[1;33m[WARNING]\033[0m'
 
+# test
+
 # check the correctness of the data folder
 def checkDataFolder():
     std_file_names = ['Partition6467LinkData.csv', 'Partition6467ProbePoints.csv', 'PUT DATA FILES IN THIS FOLDER', 'readme - mapmatching.txt']

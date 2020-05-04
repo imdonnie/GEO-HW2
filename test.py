@@ -1,7 +1,7 @@
-from helper.loader import checkDataFolder
-from helper.loader import load
-from matplotlib import pyplot as plt
-
+from helper.Tools import checkDataFolder
+from helper.Tools import load
+from helper.Tools import plotLinkData
+from helper.Tools import test
 if __name__ == "__main__":
     # print(checkDataFolder())
     # load('link data')
@@ -9,4 +9,6 @@ if __name__ == "__main__":
     # print(probe_points.shape)
 
     link_data = load('link data')
-    print(link_data)
+    plotLinkData(link_data)
+
+    # test()

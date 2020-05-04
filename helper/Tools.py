@@ -18,18 +18,18 @@ def checkDataFolder():
     file_names = os.listdir(data_path)
     return [file_name in std_file_names for file_name in file_names] == [True for i in range(4)]
 
-def loadLinkData():
+def loadLinkData(slice=200089):
     link_data_path = os.path.join(data_path, 'Partition6467LinkData.csv')
     print(INFO, 'Load link data from: {0}'.format(link_data_path))
     links = []
     # load into map data structure
     with open(link_data_path) as link_data_file:
         link_data_lines = link_data_file.readlines()
-        for i in tqdm.trange(len(link_data_lines[:])):
+        for i in tqdm.trange(len(link_data_lines[:slice])):
             link_data = link_data_lines[i].split(',')
             nodes = link_data[14].split('|')
             for i, node in enumerate(nodes[:-1]):
-                # Link: cur_node(lat, lon, alt)---nxt_node(lat, lon, alt)
+                # sub_link: cur_node(lat, lon, alt)---nxt_node(lat, lon, alt)
                 cur_node = MapPoint(nodes[i].split('/'))
                 nxt_node = MapPoint(nodes[i+1].split('/'))
                 sub_link = MapLink(cur_node, nxt_node)
@@ -75,7 +75,6 @@ def plotLinkData(link_data):
         if inBox(node_b, BBox):
             points.append(node_b)
     locs = np.array(points)
-    print(locs)
 
     longtitudes = locs[:,0]
     latitudes = locs[:,1]

@@ -1,6 +1,5 @@
 # Helps to convert lat long to UTM coordinates
 import math
-
 # Standard python package for data manipulation
 import numpy as np
 import pandas as pd
@@ -20,6 +19,7 @@ def calculate_hmm(data_links, data_probes):
     projections = []
     transitions = []
     distances = []
+    links_node = [] #
     previous_probe = None
 
     for i in data_probes["probeID"]:
@@ -33,17 +33,20 @@ def calculate_hmm(data_links, data_probes):
         layer_projections = []
         layer_transitions = []
         layer_distances = []
+        layer_links_node = [] #
         point = Point(probe["easting"], probe["northing"])
         for p in possible_matches_index:
             link = data_links.loc[p]
+            link_node = data_links.loc[p,["refNodeID", "nrefNodeID"]]#
+            print('link_node',link_node)
             utms = link["utms"][2:-2].replace("), (", "|").replace(", ", " ").replace("|", ", ")
             line = wkt.loads("LINESTRING (" + utms + ")")
             nearest = nearest_points(line, point)[0]
-            print(print(link))
             distance = line.distance(point)
             probability = 1 / (math.sqrt(math.pi * 2) * sigma) * math.exp(-0.5 * (distance / sigma) ** 2)
             layer_emmissions.append(math.log(probability, 2))
-            layer_projections.append(nearest)
+            layer_projections.append([nearest,link_node])#
+            #layer_links_node.append(link_node)#
             layer_distances.append(distance)
             if not pd.Series(previous_probe).empty:
                 prev_probe_point = Point(previous_probe["easting"], previous_probe["northing"])
@@ -51,14 +54,15 @@ def calculate_hmm(data_links, data_probes):
                 node_transitions = []
                 for projection in projections[-1]:
                     # We could not calculate the right distance on the route in our case we used nearest.distance(projection)
-                    d_t = abs(distance_probes - nearest.distance(projection))
-                    transition_prob = 1 / beta * math.exp(-d_t / beta)
+                    d_t = abs(distance_probes - nearest.distance(projection[0]))
+                    transition_prob = 1 / beta * math.exp(-d_t / beta) * is_connected(projection[1],link_node)
                     node_transitions.append(math.log(transition_prob, 2))
                 layer_transitions.append(node_transitions)
         if layer_transitions:
             transitions.append(layer_transitions)
         emissions.append(layer_emmissions)
         projections.append(layer_projections)
+        #links_node.append(layer_links_node)#
         layer_distances.sort()
         distances.append(layer_distances)
         previous_probe = probe
@@ -67,6 +71,12 @@ def calculate_hmm(data_links, data_probes):
     emissions = np.array(emissions)
     transitions = np.array(transitions)
     return hmm, emissions, projections, transitions, distances
+
+def is_connected(linka,linkb):
+    if (linka["refNodeID"] == linkb["refNodeID"] or linka["refNodeID"] == linkb["nrefNodeID"] or linka["nrefNodeID"] == linkb["refNodeID"] or linka["nrefNodeID"] == linkb["nrefNodeID"]):
+        return 1
+    else:
+        return 0.1
 
 
 def find_path(emissions, transitions, hmm, layer, prev_probabilities):

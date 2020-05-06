@@ -59,4 +59,5 @@ def loadCleanData():
 
 if __name__ == "__main__":
     # loadCleanData()
-    cleanLinkData()
+    # cleanLinkData()
+    print(ERROR)

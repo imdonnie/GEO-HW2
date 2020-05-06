@@ -89,7 +89,7 @@ for line in lines:
         test_slope = float(test_slopeinfo[1])
         # find the nearest probe, then it is the best slope for approx
         cndSlopesSum = 0
-        cndCount = 0
+        cndCount = 0    
         for train_slope in slopes[linkid]:
             if abs(train_slope.distFromRef - test_distFromRef) < nearDist:
                 # discard unreasonable slope

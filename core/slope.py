@@ -58,13 +58,21 @@ def error(row):
     real_slopes = row['surveyedSlope']
     if not pd.isna(real_slopes):
         real_slopes = [pair.split('/') for pair in real_slopes.split('|')]
+        before_error = []
+        after_error = []
+        for pair in real_slopes:
+            before_error.append(abs(float(pair[1])-float(before_slope)))
+            after_error.append(abs(float(pair[1])-float(after_slope)))
+        # print(min(before_error), min(after_error))
+        res = min(after_error)
+    else:
+        res = 0
+    return res
 
 
 
 def evaluateSlope():
     slopes = pd.read_csv(os.path.join(geo_path, 'data', 'Slope.csv'))
     errors = slopes.apply(error, axis=1)
-    error.to_csv(os.path.join(geo_path, 'data', 'errors.csv'))
-    # for index, row in slopes.iterrows():
-    #     print(row)
+    errors.to_csv(os.path.join(geo_path, 'data', 'errors.csv'))
     

@@ -50,11 +50,17 @@ def cleanProbePoints():
     data_probes = geopandas.GeoDataFrame(data_probes, geometry='shape')
     data_probes.to_csv(clean_probes_csv)
 
-def loadCleanData():
-    data_links, data_probes = pd.read_csv(clean_links_csv), pd.read_csv(clean_probes_csv)
-    data_links['shape'], data_probes['shape'] = data_links['shape'].apply(wkt.loads), data_probes['shape'].apply(wkt.loads)
-    data_links, data_probes = geopandas.GeoDataFrame(data_links, geometry='shape'), geopandas.GeoDataFrame(data_probes, geometry='shape')
-    return data_links, data_probes
+def loadCleanData(target):
+    if target is 'links':
+        data_links = pd.read_csv(clean_links_csv)
+        data_links['shape'] = data_links['shape'].apply(wkt.loads)
+        data_links = geopandas.GeoDataFrame(data_links, geometry='shape')
+        return data_links
+    elif target is 'probes':
+        data_probes = pd.read_csv(clean_probes_csv)
+        data_probes['shape'] = data_probes['shape'].apply(wkt.loads)
+        data_probes = geopandas.GeoDataFrame(data_probes, geometry='shape')
+        return data_probes
 
 
 if __name__ == "__main__":

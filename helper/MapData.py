@@ -16,3 +16,4 @@ class MapLink():
         return self.link_node_a.getLoc(), self.link_node_b.getLoc()
         
     def pointToLinkDistance(self, point):
+        pass

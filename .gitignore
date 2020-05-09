@@ -5,3 +5,4 @@
 **/*.csv
 **/*.txt
 .vs
+/data/*.rar

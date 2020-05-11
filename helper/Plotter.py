@@ -55,20 +55,20 @@ def visualizeMatched(data_links, csv_file=os.path.join(geo_path, 'data', 'Pointw
     # fig, ax = plt.subplots()
     ax = plt.figure().add_subplot(111, projection='3d')
     i = 0
-    for point in points_locations[:100]:
+    for point in points_locations[:50]:
         x = point[0]
         y = point[1]
         z = point[2]
         ax.scatter(x, y, z, c='black', alpha=0.3)
-        ax.text(x, y, z, i)
+        # ax.text(x, y, z, i)
         i += 1
 
-    for link in links_locations[:100]:
+    for link in links_locations[:50]:
         x = link[:,0]
         y = link[:,1]
         # ax.plot(x, y, c='b')
         z = 0
-        ax.plot(x, y, z, c='red')
+        ax.plot(x, y, z, c='red', alpha=0.5)
         # line = Line2D(x, y, z, color='red')
         # bx.add_line(line)
 
@@ -77,7 +77,8 @@ def visualizeMatched(data_links, csv_file=os.path.join(geo_path, 'data', 'Pointw
 
 def makeBinary():
     errors = pd.read_csv(os.path.join(geo_path, 'data', 'errors.csv'))
-    print
+    print(errors.shape)
+    print(errors[errors <= 0.01].shape)
     
 def plotDistribution():
     predicted = []
@@ -85,14 +86,15 @@ def plotDistribution():
     with open(os.path.join(geo_path, 'data', 'slope.txt')) as f:
         lines = f.readlines()
         for line in lines:
-            data = line.strip().split(', ')
+            data = line.strip().split(',')
             # print(data)
-            predicted.append(float(data[0]))
+            if abs(float(data[0])*57.3)<7:
+                predicted.append(float(data[0])*57.3)
             truth.append(float(data[1]))
     predicted = np.array(predicted)
     truth = np.array(truth)
-    print(predicted.shape)
     kwargs = dict()
-    plt.hist(predicted, alpha=0.3, bins=10, color='b')
-    plt.hist(truth, alpha=0.3, bins=10, color='r')
+    plt.hist(predicted, alpha=0.5, bins=42, color='b')
+    plt.hist(truth, alpha=0.5, bins=30, color='r')
+    plt.legend(['Predicted', 'Ground Truth'])
     plt.show()

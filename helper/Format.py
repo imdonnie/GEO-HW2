@@ -1,5 +1,6 @@
 import os
 import utm
+import tqdm
 import geopandas
 # import modin.pandas as pd
 import pandas as pd
@@ -23,6 +24,13 @@ shape2utm = lambda shape: [(utm.from_latlon(c[1], c[0])[0], utm.from_latlon(c[1]
 row2point = lambda row:  "POINT ({0} {1})".format(str(row["longitude"]), str(row["latitude"]))
 caleast = lambda row: utm.from_latlon(row["latitude"], row["longitude"])[0]
 calnorth = lambda row: utm.from_latlon(row["latitude"], row["longitude"])[1]
+
+def deleteDuplicate():
+    probes = pd.read_csv(data_probes_csv)
+    print(probes.shape)
+    probes.drop_duplicates(inplace=True)
+    print(probes.shape)
+    probes.to_csv(os.path.join(data_probes_csv))
 
 def cleanLinkData():
     useless_idx = ["timeZone", "shapeInfo", "curvatureInfo"]
@@ -61,9 +69,3 @@ def loadCleanData(target):
         data_probes['shape'] = data_probes['shape'].apply(wkt.loads)
         data_probes = geopandas.GeoDataFrame(data_probes, geometry='shape')
         return data_probes
-
-
-if __name__ == "__main__":
-    # loadCleanData()
-    # cleanLinkData()
-    print(ERROR)

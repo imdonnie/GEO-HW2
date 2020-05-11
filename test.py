@@ -2,13 +2,10 @@ from helper.Tools import checkDataFolder
 from helper.Tools import load
 from helper.Tools import plotLinkData
 from helper.Tools import geo_path
-
-from helper.Format import cleanLinkData
-from helper.Format import cleanProbePoints
-from helper.Format import loadCleanData
-
-from core.slope import calculateSlope
-from core.slope import evaluateSlope
+from helper.Plotter import *
+from helper.Format import *
+from core.slope import *
+import os
 if __name__ == "__main__":
 # visualizaiton part of the link data
     # link_data = load('link data')
@@ -17,4 +14,14 @@ if __name__ == "__main__":
     # cleanLinkData()
     # links = loadCleanData('links')
     # calculateSlope(links)
-    evaluateSlope()
+    # evaluateSlope()
+
+    # deleteDuplicate()
+    # cleanProbePoints()
+
+    # slopeInfo = '0.00/-0.090|110.17/0.062|210.24/0.0746'
+    # distance = 220.00
+    # print(getNodeSlope(distance, slopeInfo))
+
+    # visualizeMatched(links)
+    plotDistribution()

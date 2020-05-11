@@ -6,3 +6,4 @@
 **/*.txt
 **/*.xlsx
 .vs
+/data/*.rar
